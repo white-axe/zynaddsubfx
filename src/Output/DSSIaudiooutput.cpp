@@ -627,8 +627,6 @@ DSSIaudiooutput::DSSIaudiooutput(unsigned long sampleRate) : dssi_control{dssi_c
     this->sampleRate  = sampleRate;
     this->banksInited = false;
 
-    zyn::sprng(time(NULL));
-
     synth.alias();
     middleware = new zyn::MiddleWare(std::move(synth), &config);
     initBanks();

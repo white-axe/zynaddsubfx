@@ -248,8 +248,6 @@ int main(int argc, char *argv[])
 
     synth.alias(); //build aliases
 
-    sprng(time(NULL));
-
     // for option entries with the 3rd member (flag) pointing here,
     // getopt_long*() will return 0 and set this flag to the 4th member (val)
     int getopt_flag;
