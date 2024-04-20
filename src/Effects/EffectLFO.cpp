@@ -91,7 +91,7 @@ void EffectLFO::effectlfoout(float *outl, float *outr)
     if(xl > 1.0f) {
         xl   -= 1.0f;
         ampl1 = ampl2;
-        ampl2 = (1.0f - lfornd) + lfornd * RND;
+        ampl2 = lfornd == 0.0f ? 1.0f : (1.0f - lfornd) + lfornd * RND;
     }
     *outl = (out + 1.0f) * 0.5f;
 
@@ -102,7 +102,7 @@ void EffectLFO::effectlfoout(float *outl, float *outr)
     if(xr > 1.0f) {
         xr   -= 1.0f;
         ampr1 = ampr2;
-        ampr2 = (1.0f - lfornd) + lfornd * RND;
+        ampr2 = lfornd == 0.0f ? 1.0f : (1.0f - lfornd) + lfornd * RND;
     }
     *outr = (out + 1.0f) * 0.5f;
 }
