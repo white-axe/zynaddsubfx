@@ -994,7 +994,7 @@ int PADnoteParameters::sampleGenerator(PADnoteParameters::callback cb,
     if(oscilgen->needPrepare())
         oscilgen->prepare();
 
-#ifdef WIN32
+#if true //Concurrency induces nondeterminism! Let's actually not use multithreading on any platform.
     //Temporarily disable multi-threading here as C++11 threads are broken on
     //mingw cross compilation
     thread_cb(1,0);
