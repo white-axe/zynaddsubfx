@@ -962,6 +962,7 @@ void Master::defaults()
 void Master::noteOn(char chan, note_t note, char velocity, float note_log2_freq)
 {
     if(velocity) {
+        firstNoteMessageReceived = true;
         for(int npart = 0; npart < NUM_MIDI_PARTS; ++npart) {
             if(chan == part[npart]->Prcvchn) {
                 fakepeakpart[npart] = velocity * 2;
@@ -981,6 +982,7 @@ void Master::noteOn(char chan, note_t note, char velocity, float note_log2_freq)
  */
 void Master::noteOff(char chan, note_t note)
 {
+    firstNoteMessageReceived = true;
     for(int npart = 0; npart < NUM_MIDI_PARTS; ++npart)
         if((chan == part[npart]->Prcvchn) && part[npart]->Penabled)
             part[npart]->NoteOff(note);

@@ -493,6 +493,9 @@ unsigned char EffectMgr::geteffectparrt(int npar)
 // Apply the effect
 void EffectMgr::out(float *smpsl, float *smpsr)
 {
+    if(!firstNoteMessageReceived)
+        return;
+
     if(!efx) {
         if(!insertion)
             for(int i = 0; i < synth.buffersize; ++i) {
