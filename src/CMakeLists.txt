@@ -261,7 +261,7 @@ set (BuildOptions_SSE
 check_cxx_compiler_flag("${BuildOptions_SSE} -Werror" SUPPORT_SSE)
 
 set (BuildOptionsBasic
-    "-std=c++11 -Wno-unused-parameter -O3 -ffast-math -fomit-frame-pointer"
+    "-std=c++11 -Wno-unused-parameter -O3 -fno-math-errno -fno-trapping-math -fno-signaling-nans -fomit-frame-pointer"
     CACHE STRING "basic X86 compiler options"
 )
 STRING(APPEND BuildOptionsBasic " ${BuildOptions_ExtendedWarnings}")
