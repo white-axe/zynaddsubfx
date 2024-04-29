@@ -261,7 +261,7 @@ set (BuildOptions_SSE
 check_cxx_compiler_flag("${BuildOptions_SSE} -Werror" SUPPORT_SSE)
 
 set (BuildOptionsBasic
-    "-std=c++11 -Wno-unused-parameter -O3 -fno-math-errno -fno-trapping-math -fno-signaling-nans -fomit-frame-pointer"
+    "-std=c++11 -Wno-unused-parameter -O3 -fomit-frame-pointer"
     CACHE STRING "basic X86 compiler options"
 )
 STRING(APPEND BuildOptionsBasic " ${BuildOptions_ExtendedWarnings}")
@@ -386,11 +386,6 @@ if(COMPILER_SUPPORTS_SYSTEM_HDR_PREFIX)
     add_definitions(--system-header-prefix="FL/")
 endif()
 
-if(HAVE_X86_FISTPL)
-    message(STATUS "Compiling with x86 opcode support")
-    add_definitions(-DASM_F2I_YES)
-endif()
-
 if (BuildForDebug)
 	set (CMAKE_BUILD_TYPE "Debug")
 	set (CMAKE_CXX_FLAGS_DEBUG ${BuildOptionsDebug})
@@ -399,22 +394,6 @@ else (BuildForDebug)
 	set (CMAKE_BUILD_TYPE "Release")
 	
 	set (CMAKE_CXX_FLAGS_RELEASE ${BuildOptionsBasic})
-
-	if (BuildForAMD_X86_64)
-		set (CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} ${BuildOptions_x86_64AMD}")
-	endif (BuildForAMD_X86_64)
-	
-	if (BuildForCore2_X86_64)
-			set (CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} ${BuildOptions_X86_64Core2}")
-	endif (BuildForCore2_X86_64)
-
-	if (SUPPORT_SSE)
-		set (CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} ${BuildOptions_SSE}")
-	endif (SUPPORT_SSE)
-	
-	if (SUPPORT_NEON AND NOT NoNeonPlease)
-		set (CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} ${BuildOptions_NEON}")
-	endif (SUPPORT_NEON AND NOT NoNeonPlease)
 
 	message (STATUS "Building for ${CMAKE_BUILD_TYPE}, flags: ${CMAKE_CXX_FLAGS_RELEASE}")
 endif (BuildForDebug)
