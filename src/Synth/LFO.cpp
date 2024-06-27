@@ -41,7 +41,7 @@ LFO::LFO(const LFOParams &lfopars_, float basefreq_, const AbsTime &t, WatchMana
             phase = 0.0f;
     }
     else {
-        phase = fmod((float)(t.time() - firstNoteMessageReceivedTime) * phaseInc, 1.0f);
+        phase = fmod((float)t.timeSinceFirstNote() * phaseInc, 1.0f);
     }
 
     lfornd = limit(lfopars.Prandomness / 127.0f, 0.0f, 1.0f);

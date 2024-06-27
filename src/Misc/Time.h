@@ -20,6 +20,7 @@ class AbsTime
     public:
         AbsTime(const SYNTH_T &synth)
             :frames(0),
+            firstNoteFrames(-1),
             s(synth){};
         void operator++(){++frames;};
         void operator++(int){frames++;};
@@ -28,8 +29,12 @@ class AbsTime
         float dt() const { return s.dt(); }
         float framesPerSec() const { return 1/s.dt();}
         int   samplesPerFrame() const {return s.buffersize;}
+        bool firstNoteReceived() const { return firstNoteFrames >= 0; }
+        int64_t timeSinceFirstNote() const { return firstNoteReceived() ? frames - firstNoteFrames : 0; }
+        void setFirstNoteReceived() { if(!firstNoteReceived()) { firstNoteFrames = frames; } }
     private:
         int64_t frames;
+        int64_t firstNoteFrames;
         const SYNTH_T &s;
         
 };

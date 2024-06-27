@@ -772,8 +772,6 @@ Master::Master(const SYNTH_T &synth_, Config* config)
     frozenState(false), pendingMemory(false),
     synth(synth_), gzip_compression(config->cfg.GzipCompression)
 {
-    firstNoteMessageReceivedTime = time.time();
-
     SaveFullXml=(config->cfg.SaveFullXml==1);
     bToU = NULL;
     uToB = NULL;
@@ -964,7 +962,7 @@ void Master::defaults()
 void Master::noteOn(char chan, note_t note, char velocity, float note_log2_freq)
 {
     if(velocity) {
-        firstNoteMessageReceived = true;
+        time.setFirstNoteReceived();
         for(int npart = 0; npart < NUM_MIDI_PARTS; ++npart) {
             if(chan == part[npart]->Prcvchn) {
                 fakepeakpart[npart] = velocity * 2;
@@ -984,7 +982,7 @@ void Master::noteOn(char chan, note_t note, char velocity, float note_log2_freq)
  */
 void Master::noteOff(char chan, note_t note)
 {
-    firstNoteMessageReceived = true;
+    time.setFirstNoteReceived();
     for(int npart = 0; npart < NUM_MIDI_PARTS; ++npart)
         if((chan == part[npart]->Prcvchn) && part[npart]->Penabled)
             part[npart]->NoteOff(note);
@@ -1440,7 +1438,6 @@ bool Master::AudioOut(float *outl, float *outr)
 
     //update the global frame timer
     time++;
-    if (!firstNoteMessageReceived) firstNoteMessageReceivedTime = time.time();
 
 #ifdef DEMO_VERSION
     double seconds = time.time()*synth.buffersize_f/synth.samplerate_f;
