@@ -772,6 +772,8 @@ Master::Master(const SYNTH_T &synth_, Config* config)
     frozenState(false), pendingMemory(false),
     synth(synth_), gzip_compression(config->cfg.GzipCompression)
 {
+    firstNoteMessageReceivedTime = time.time();
+
     SaveFullXml=(config->cfg.SaveFullXml==1);
     bToU = NULL;
     uToB = NULL;
@@ -1438,6 +1440,7 @@ bool Master::AudioOut(float *outl, float *outr)
 
     //update the global frame timer
     time++;
+    if (!firstNoteMessageReceived) firstNoteMessageReceivedTime = time.time();
 
 #ifdef DEMO_VERSION
     double seconds = time.time()*synth.buffersize_f/synth.samplerate_f;

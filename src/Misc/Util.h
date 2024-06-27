@@ -27,6 +27,7 @@ namespace zyn {
 
 extern bool isPlugin;
 extern bool firstNoteMessageReceived;
+extern int64_t firstNoteMessageReceivedTime;
 bool fileexists(const char *filename);
 
 using std::min;

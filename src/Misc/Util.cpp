@@ -40,6 +40,7 @@ namespace zyn {
 
 bool isPlugin = false;
 bool firstNoteMessageReceived = false;
+int64_t firstNoteMessageReceivedTime = 0;
 
 prng_t prng_state = 0x1234;
 
